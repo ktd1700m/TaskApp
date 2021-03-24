@@ -22,4 +22,21 @@
         android:src="@drawable/plus"
         app:backgroundTint="@color/colorPrimary" />
 
+    <Button
+        android:id="@+id/button_category_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="16dp"
+        android:text="カテゴリ検索"/>
+
+    <Button
+        android:id="@+id/button_search_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="16dp"
+        android:text="検索リセット"/>
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

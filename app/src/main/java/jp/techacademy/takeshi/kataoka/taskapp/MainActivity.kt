@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -87,6 +88,31 @@ class MainActivity : AppCompatActivity() {
             dialog.show()
 
             true
+        }
+
+        // カテゴリ検索ボタンを押したときの処理
+        button_category_search.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            val editText = EditText(this)
+            editText.hint = "カテゴリを入力してください"
+            builder.setTitle("カテゴリ検索")
+                .setView(editText)
+                // Realmデータベースから、「カテゴリから入力欄の文字列に該当するデータを検索して新しい日時順に並べた結果」を取得
+                .setPositiveButton("検索"){ _, _ ->
+                    val searchRealmResults = mRealm.where(Task::class.java).equalTo("category", editText.text.toString()).findAll().sort("date", Sort.DESCENDING)
+                    mTaskAdapter.mTaskList = mRealm.copyFromRealm(searchRealmResults)
+                    listView1.adapter = mTaskAdapter
+                    mTaskAdapter.notifyDataSetChanged()
+                }
+                .setNegativeButton("キャンセル"){ _, _ ->
+                    // 何もしない
+                }
+                .show()
+        }
+
+        // 検索リセットボタンを押したときの処理
+        button_search_reset.setOnClickListener {
+            reloadListView()
         }
 
         reloadListView()
